@@ -1,4 +1,5 @@
 import 'package:firebase_core/firebase_core.dart';
+import 'package:flexibleea/Persistent/onboardingintro.dart';
 import 'package:flexibleea/user_state.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
@@ -45,7 +46,7 @@ class MyApp extends StatelessWidget {
             theme: ThemeData(
                 scaffoldBackgroundColor: Colors.white,
                 primarySwatch: Colors.purple),
-            home: UserState(),
+            home: const OnBoardingPage(),
           );
         });
   }

@@ -43,15 +43,25 @@ dependencies:
   curved_navigation_bar: ^1.0.3
   uuid: ^4.5.1
   fluttertoast: ^8.2.1
+<<<<<<< HEAD
   firebase_auth: ^5.5.3
   firebase_core: ^3.13.0
   cloud_firestore: ^5.6.7
   firebase_storage: ^12.4.5
+=======
+  firebase_auth: ^4.4.0
+  firebase_core: ^2.20.0
+  cloud_firestore: ^4.5.0
+  firebase_storage: ^11.1.0
+>>>>>>> ee0abd0ce009c9e89e86e8eca6d34a46631148d7
   universal_html: ^2.2.1
   time_range_picker: ^2.2.0
   flutter_document_picker: ^5.1.0
   font_awesome_flutter: ^10.4.0
   get: any
+  pinput: ^3.0.1
+  smooth_page_indicator: ^1.1.0
+  introduction_screen: ^3.1.8
 
 dev_dependencies:
   flutter_test:
@@ -78,6 +88,7 @@ flutter:
   assets:
     - assets/images/
     - assets/icons/
+    - assets/fullscreen/
 
   # An image asset can refer to one or more resolution-specific "variants", see
   # https://flutter.dev/assets-and-images/#resolution-aware

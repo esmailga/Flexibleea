@@ -124,7 +124,7 @@ class _ExpertiseState extends State<Expertise> {
               textAlign: TextAlign.center,
               style: TextStyle(fontSize: 20, color: Colors.white),
             ),
-            content: Container(
+            content: SizedBox(
               width: size.width * 0.9,
               child: ListView.builder(
                   shrinkWrap: true,
@@ -426,13 +426,12 @@ class _ExpertiseState extends State<Expertise> {
                                 shape: RoundedRectangleBorder(
                                   borderRadius: BorderRadius.circular(13),
                                 ),
-                                child: Padding(
-                                  padding:
-                                      const EdgeInsets.symmetric(vertical: 14),
+                                child: const Padding(
+                                  padding: EdgeInsets.symmetric(vertical: 14),
                                   child: Row(
                                     mainAxisSize: MainAxisSize.min,
                                     mainAxisAlignment: MainAxisAlignment.center,
-                                    children: const [
+                                    children: [
                                       Text(
                                         'Upload',
                                         style: TextStyle(
@@ -468,13 +467,12 @@ class _ExpertiseState extends State<Expertise> {
                                 shape: RoundedRectangleBorder(
                                   borderRadius: BorderRadius.circular(13),
                                 ),
-                                child: Padding(
-                                  padding:
-                                      const EdgeInsets.symmetric(vertical: 14),
+                                child: const Padding(
+                                  padding: EdgeInsets.symmetric(vertical: 14),
                                   child: Row(
                                     mainAxisSize: MainAxisSize.min,
                                     mainAxisAlignment: MainAxisAlignment.center,
-                                    children: const [
+                                    children: [
                                       Text(
                                         'Confirm',
                                         style: TextStyle(

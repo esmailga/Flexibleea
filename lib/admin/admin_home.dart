@@ -1,12 +1,13 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flexibleea/services/global_methods.dart';
-import 'package:flexibleea/user_state.dart';
 import 'package:flexibleea/widgets/bottom_nav_bar_admin.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 
 class AdminHomePage extends StatefulWidget {
+  const AdminHomePage({super.key});
+
   @override
   State<AdminHomePage> createState() => _AdminHomePageState();
 }

@@ -7,7 +7,7 @@ class GlobalMethod {
         context: ctx,
         builder: (context) {
           return AlertDialog(
-            title: Row(children: const [
+            title: const Row(children: [
               Padding(
                 padding: EdgeInsets.all(8.0),
                 child: Icon(

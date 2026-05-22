@@ -9,17 +9,17 @@ import 'package:flutter/material.dart';
 
 class BottomNavigationBarApp extends StatelessWidget {
   int indexNum = 0;
-  BottomNavigationBarApp({required this.indexNum});
+  BottomNavigationBarApp({super.key, required this.indexNum});
 
   void _logout(context) {
-    final FirebaseAuth _auth = FirebaseAuth.instance;
+    final FirebaseAuth auth = FirebaseAuth.instance;
 
     showDialog(
         context: context,
         builder: (context) {
           return AlertDialog(
             backgroundColor: Colors.black54,
-            title: Row(children: const [
+            title: const Row(children: [
               Padding(
                 padding: EdgeInsets.all(8.0),
                 child: Icon(
@@ -55,7 +55,7 @@ class BottomNavigationBarApp extends StatelessWidget {
               ),
               TextButton(
                 onPressed: () {
-                  _auth.signOut();
+                  auth.signOut();
                   Navigator.canPop(context) ? Navigator.pop(context) : null;
                   Navigator.pushReplacement(
                       context, MaterialPageRoute(builder: (_) => UserState()));
@@ -73,7 +73,7 @@ class BottomNavigationBarApp extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return CurvedNavigationBar(
-      color: Color.fromARGB(140, 157, 47, 220),
+      color: const Color.fromARGB(140, 157, 47, 220),
       buttonBackgroundColor: const Color.fromARGB(223, 163, 47, 220),
       backgroundColor: const Color.fromARGB(156, 211, 141, 247),
       height: 70,
@@ -120,8 +120,8 @@ class BottomNavigationBarApp extends StatelessWidget {
           Navigator.pushReplacement(
               context, MaterialPageRoute(builder: (_) => const Expertise()));
         } else if (index == 3) {
-          final FirebaseAuth _auth = FirebaseAuth.instance;
-          final User? user = _auth.currentUser;
+          final FirebaseAuth auth = FirebaseAuth.instance;
+          final User? user = auth.currentUser;
           final String uid = user!.uid;
           Navigator.pushReplacement(
               context,

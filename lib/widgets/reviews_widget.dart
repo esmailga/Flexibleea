@@ -9,6 +9,7 @@ class ReviewsWidget extends StatefulWidget {
   final String reviewerImageUrl;
 
   const ReviewsWidget({
+    super.key,
     required this.reviewId,
     required this.reviewerId,
     required this.reviewerName,

@@ -1,10 +1,11 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flexibleea/home/home_screen_freelancer.dart';
-import 'package:flexibleea/widgets/bottom_nav_bar.dart';
 import 'package:flexibleea/widgets/expertise_widget.dart';
 import 'package:flutter/material.dart';
 
 class SearchScreen extends StatefulWidget {
+  const SearchScreen({super.key});
+
   @override
   State<SearchScreen> createState() => _SearchScreenState();
 }

@@ -1,6 +1,4 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
-import 'package:firebase_auth/firebase_auth.dart';
-import 'package:flexibleea/freelancer/freelancer_details.dart';
 import 'package:flexibleea/services/global_methods.dart';
 import 'package:flutter/material.dart';
 import 'package:fluttertoast/fluttertoast.dart';
@@ -19,6 +17,7 @@ class ExpertiseWidgetAdmin extends StatefulWidget {
   final String availableTime;
 
   const ExpertiseWidgetAdmin({
+    super.key,
     required this.expertiseTitle,
     required this.expertiseDescription,
     required this.freelancerId,
@@ -63,9 +62,9 @@ class _ExpertiseWidgetAdminState extends State<ExpertiseWidgetAdmin> {
                         ctx: ctx, error: 'Expertise cannot be deleted');
                   } finally {}
                 },
-                child: Row(
+                child: const Row(
                   mainAxisAlignment: MainAxisAlignment.center,
-                  children: const [
+                  children: [
                     Icon(
                       Icons.delete_rounded,
                       color: Colors.purple,

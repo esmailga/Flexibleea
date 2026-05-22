@@ -19,6 +19,7 @@ class ExpertiseWidget extends StatefulWidget {
   final String availableTime;
 
   const ExpertiseWidget({
+    super.key,
     required this.expertiseTitle,
     required this.expertiseDescription,
     required this.freelancerId,
@@ -41,7 +42,7 @@ class _ExpertiseWidgetState extends State<ExpertiseWidget> {
 
   _deleteExpertise() {
     User? user = _auth.currentUser;
-    final _uid = user!.uid;
+    final uid = user!.uid;
     showDialog(
         context: context,
         builder: (ctx) {
@@ -50,7 +51,7 @@ class _ExpertiseWidgetState extends State<ExpertiseWidget> {
               TextButton(
                 onPressed: () async {
                   try {
-                    if (widget.uploadedBy == _uid) {
+                    if (widget.uploadedBy == uid) {
                       await FirebaseFirestore.instance
                           .collection('Freelancer Expertise')
                           .doc(widget.freelancerId)
@@ -72,9 +73,9 @@ class _ExpertiseWidgetState extends State<ExpertiseWidget> {
                         ctx: ctx, error: 'Expertise cannot be deleted');
                   } finally {}
                 },
-                child: Row(
+                child: const Row(
                   mainAxisAlignment: MainAxisAlignment.center,
-                  children: const [
+                  children: [
                     Icon(
                       Icons.delete_rounded,
                       color: Colors.purple,

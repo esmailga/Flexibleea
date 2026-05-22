@@ -2,7 +2,6 @@
 
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
-import 'package:flexibleea/services/global_variables.dart';
 import 'package:flexibleea/user_state.dart';
 import 'package:flexibleea/widgets/bottom_nav_bar.dart';
 import 'package:flutter/material.dart';
@@ -12,7 +11,7 @@ import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 class FreelancerProfile extends StatefulWidget {
   final String userID;
 
-  const FreelancerProfile({required this.userID});
+  const FreelancerProfile({super.key, required this.userID});
 
   @override
   State<FreelancerProfile> createState() => _FreelancerProfileState();
@@ -49,12 +48,11 @@ class _FreelancerProfileState extends State<FreelancerProfile> {
               '${joinedDate.year} - ${joinedDate.month} - ${joinedDate.day}';
         });
         User? user = _auth.currentUser;
-        final _uid = user!.uid;
+        final uid = user!.uid;
         setState(() {
-          _isSameUser = _uid == widget.userID;
+          _isSameUser = uid == widget.userID;
         });
       }
-    } catch (error) {
     } finally {
       _isLoading = false;
     }
@@ -273,15 +271,14 @@ class _FreelancerProfileState extends State<FreelancerProfile> {
                                               borderRadius:
                                                   BorderRadius.circular(12),
                                             ),
-                                            child: Padding(
-                                              padding:
-                                                  const EdgeInsets.symmetric(
-                                                      vertical: 14),
+                                            child: const Padding(
+                                              padding: EdgeInsets.symmetric(
+                                                  vertical: 14),
                                               child: Row(
                                                 mainAxisSize: MainAxisSize.min,
                                                 mainAxisAlignment:
                                                     MainAxisAlignment.center,
-                                                children: const [
+                                                children: [
                                                   Text(
                                                     'Logout',
                                                     style: TextStyle(

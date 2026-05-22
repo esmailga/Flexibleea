@@ -10,6 +10,7 @@ class AllFreelancersWidget extends StatefulWidget {
   final String userImageUrl;
 
   const AllFreelancersWidget({
+    super.key,
     required this.userID,
     required this.userName,
     required this.email,
@@ -34,6 +35,7 @@ class _AllFreelancersWidgetState extends State<AllFreelancersWidget> {
     }
   }
 
+  @override
   Widget build(BuildContext context) {
     return Card(
       elevation: 8,
@@ -77,10 +79,10 @@ class _AllFreelancersWidgetState extends State<AllFreelancersWidget> {
             color: Colors.black,
           ),
         ),
-        subtitle: Column(
+        subtitle: const Column(
           crossAxisAlignment: CrossAxisAlignment.start,
           mainAxisAlignment: MainAxisAlignment.start,
-          children: const [
+          children: [
             Text(
               'Visit Profile',
               maxLines: 2,

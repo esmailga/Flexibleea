@@ -29,7 +29,7 @@ class _HomeScreenState extends State<HomeScreen> {
               textAlign: TextAlign.center,
               style: TextStyle(fontSize: 20, color: Colors.white),
             ),
-            content: Container(
+            content: SizedBox(
               width: size.width * 0.9,
               child: ListView.builder(
                   shrinkWrap: true,

@@ -14,7 +14,8 @@ class FreelancerDetailsScreen extends StatefulWidget {
   final String uploadedBy;
   final String freelancerId;
 
-  FreelancerDetailsScreen({
+  const FreelancerDetailsScreen({
+    super.key,
     required this.uploadedBy,
     required this.freelancerId,
   });
@@ -45,7 +46,7 @@ class _FreelancerDetailsScreenState extends State<FreelancerDetailsScreen> {
   int requests = 0;
   bool isDateAvailable = false;
   bool isTimeAvailable = false;
-  bool _isLoading = false;
+  final bool _isLoading = false;
   bool showReview = false;
 
   requestExpertise() {
@@ -79,39 +80,31 @@ class _FreelancerDetailsScreenState extends State<FreelancerDetailsScreen> {
         .doc(widget.uploadedBy)
         .get();
 
-    if (userDoc == null) {
-      return;
-    } else {
-      setState(() {
-        authorName = userDoc.get('name');
-        userImageUrl = userDoc.get('userImage');
-      });
-    }
+    setState(() {
+      authorName = userDoc.get('name');
+      userImageUrl = userDoc.get('userImage');
+    });
     final DocumentSnapshot expertiseDatabase = await FirebaseFirestore.instance
         .collection('Freelancer Expertise')
         .doc(widget.freelancerId)
         .get();
-    if (expertiseDatabase == null) {
-      return;
-    } else {
-      setState(() {
-        expertiseTitle = expertiseDatabase.get('expertise');
-        expertiseDescription = expertiseDatabase.get('description');
-        recruitment = expertiseDatabase.get('recruitment');
-        email = expertiseDatabase.get('email');
-        phoneNumber = expertiseDatabase.get('phoneNumber');
-        requests = expertiseDatabase.get('numberRequests');
-        postedDateTimeStamp = expertiseDatabase.get('createdAt');
-        availableDate = expertiseDatabase.get('availableDate');
-        availableTime = expertiseDatabase.get('availableTime');
-        hourlyPayRate = expertiseDatabase.get('hourlyPayRate');
-      });
-    }
+    setState(() {
+      expertiseTitle = expertiseDatabase.get('expertise');
+      expertiseDescription = expertiseDatabase.get('description');
+      recruitment = expertiseDatabase.get('recruitment');
+      email = expertiseDatabase.get('email');
+      phoneNumber = expertiseDatabase.get('phoneNumber');
+      requests = expertiseDatabase.get('numberRequests');
+      postedDateTimeStamp = expertiseDatabase.get('createdAt');
+      availableDate = expertiseDatabase.get('availableDate');
+      availableTime = expertiseDatabase.get('availableTime');
+      hourlyPayRate = expertiseDatabase.get('hourlyPayRate');
+    });
   }
 
   Widget dividerWidget() {
-    return Column(
-      children: const [
+    return const Column(
+      children: [
         SizedBox(
           height: 8,
         ),
@@ -293,8 +286,8 @@ class _FreelancerDetailsScreenState extends State<FreelancerDetailsScreen> {
                                       TextButton(
                                         onPressed: () {
                                           User? user = _auth.currentUser;
-                                          final _uid = user!.uid;
-                                          if (_uid == widget.uploadedBy) {
+                                          final uid = user!.uid;
+                                          if (uid == widget.uploadedBy) {
                                             try {
                                               FirebaseFirestore.instance
                                                   .collection(
@@ -338,8 +331,8 @@ class _FreelancerDetailsScreenState extends State<FreelancerDetailsScreen> {
                                       TextButton(
                                         onPressed: () {
                                           User? user = _auth.currentUser;
-                                          final _uid = user!.uid;
-                                          if (_uid == widget.uploadedBy) {
+                                          final uid = user!.uid;
+                                          if (uid == widget.uploadedBy) {
                                             try {
                                               FirebaseFirestore.instance
                                                   .collection(
@@ -465,7 +458,7 @@ class _FreelancerDetailsScreenState extends State<FreelancerDetailsScreen> {
                             color: Colors.black,
                           ),
                         ),
-                        SizedBox(
+                        const SizedBox(
                           height: 25,
                         ),
                       ],
@@ -490,12 +483,12 @@ class _FreelancerDetailsScreenState extends State<FreelancerDetailsScreen> {
                             shape: RoundedRectangleBorder(
                               borderRadius: BorderRadius.circular(13),
                             ),
-                            child: Padding(
-                              padding: const EdgeInsets.symmetric(vertical: 14),
+                            child: const Padding(
+                              padding: EdgeInsets.symmetric(vertical: 14),
                               child: Row(
                                 mainAxisSize: MainAxisSize.min,
                                 mainAxisAlignment: MainAxisAlignment.center,
-                                children: const [
+                                children: [
                                   Text(
                                     'Request Freelancer',
                                     style: TextStyle(
@@ -579,7 +572,7 @@ class _FreelancerDetailsScreenState extends State<FreelancerDetailsScreen> {
                                                       error:
                                                           'Review cannot be less than 7 characters');
                                                 } else {
-                                                  final _generatedId =
+                                                  final generatedId =
                                                       const Uuid().v4();
                                                   await FirebaseFirestore
                                                       .instance
@@ -594,8 +587,7 @@ class _FreelancerDetailsScreenState extends State<FreelancerDetailsScreen> {
                                                             .instance
                                                             .currentUser!
                                                             .uid,
-                                                        'reviewId':
-                                                            _generatedId,
+                                                        'reviewId': generatedId,
                                                         'name': name,
                                                         'userImageUrl':
                                                             userImage,

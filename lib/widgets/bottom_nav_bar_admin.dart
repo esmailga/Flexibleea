@@ -2,26 +2,22 @@ import 'package:curved_navigation_bar/curved_navigation_bar.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flexibleea/admin/admin_delete_expertise.dart';
 import 'package:flexibleea/admin/admin_home.dart';
-import 'package:flexibleea/discover/discover_page.dart';
-import 'package:flexibleea/freelancer/expertise.dart';
-import 'package:flexibleea/freelancer/profie_freelancer.dart';
-import 'package:flexibleea/home/home_screen_freelancer.dart';
 import 'package:flexibleea/user_state.dart';
 import 'package:flutter/material.dart';
 
 class AdminNavigationBarApp extends StatelessWidget {
   int indexNum = 0;
-  AdminNavigationBarApp({required this.indexNum});
+  AdminNavigationBarApp({super.key, required this.indexNum});
 
   void _logout(context) {
-    final FirebaseAuth _auth = FirebaseAuth.instance;
+    final FirebaseAuth auth = FirebaseAuth.instance;
 
     showDialog(
         context: context,
         builder: (context) {
           return AlertDialog(
             backgroundColor: Colors.black54,
-            title: Row(children: const [
+            title: const Row(children: [
               Padding(
                 padding: EdgeInsets.all(8.0),
                 child: Icon(
@@ -57,7 +53,7 @@ class AdminNavigationBarApp extends StatelessWidget {
               ),
               TextButton(
                 onPressed: () {
-                  _auth.signOut();
+                  auth.signOut();
                   Navigator.canPop(context) ? Navigator.pop(context) : null;
                   Navigator.pushReplacement(
                       context, MaterialPageRoute(builder: (_) => UserState()));
@@ -75,7 +71,7 @@ class AdminNavigationBarApp extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return CurvedNavigationBar(
-      color: Color.fromARGB(140, 157, 47, 220),
+      color: const Color.fromARGB(140, 157, 47, 220),
       buttonBackgroundColor: const Color.fromARGB(223, 163, 47, 220),
       backgroundColor: const Color.fromARGB(156, 211, 141, 247),
       height: 70,
@@ -106,8 +102,8 @@ class AdminNavigationBarApp extends StatelessWidget {
           Navigator.pushReplacement(
               context, MaterialPageRoute(builder: (_) => AdminHomePage()));
         } else if (index == 1) {
-          Navigator.pushReplacement(
-              context, MaterialPageRoute(builder: (_) => AdminExpertise()));
+          Navigator.pushReplacement(context,
+              MaterialPageRoute(builder: (_) => const AdminExpertise()));
         } else if (index == 2) {
           _logout(context);
         }

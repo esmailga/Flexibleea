@@ -73,14 +73,14 @@ class _SignUpState extends State<SignUp> {
           password: _passTextController.text.trim(),
         );
         final User? user = _auth.currentUser;
-        final _uid = user!.uid;
+        final uid = user!.uid;
         // ignore: prefer_interpolation_to_compose_strings
         final ref =
-            FirebaseStorage.instance.ref('userImages').child(_uid + '.jpg');
+            FirebaseStorage.instance.ref('userImages').child('$uid.jpg');
         await ref.putFile(imageFile!);
         imageUrl = await ref.getDownloadURL();
-        FirebaseFirestore.instance.collection('Users').doc(_uid).set({
-          'id': _uid,
+        FirebaseFirestore.instance.collection('Users').doc(uid).set({
+          'id': uid,
           'name': _nameTextController.text,
           'email': _emailTextController.text,
           'phoneNumber': _phoneTextController.text,
@@ -326,8 +326,8 @@ class _SignUpState extends State<SignUp> {
                   onTap: () {
                     _getFromCamera();
                   },
-                  child: Row(
-                    children: const [
+                  child: const Row(
+                    children: [
                       Padding(
                         padding: EdgeInsets.all(4.0),
                         child: Icon(
@@ -347,8 +347,8 @@ class _SignUpState extends State<SignUp> {
                   onTap: () {
                     _getFromPhotos();
                   },
-                  child: Row(
-                    children: const [
+                  child: const Row(
+                    children: [
                       Padding(
                         padding: EdgeInsets.all(4.0),
                         child: Icon(
@@ -440,7 +440,7 @@ class _SignUpState extends State<SignUp> {
                     const SizedBox(height: 40),
                     _isLoading
                         ? Center(
-                            child: Container(
+                            child: SizedBox(
                               width: 70,
                               height: 70,
                               child: const CircularProgressIndicator(),
@@ -455,11 +455,11 @@ class _SignUpState extends State<SignUp> {
                             shape: RoundedRectangleBorder(
                               borderRadius: BorderRadius.circular(13),
                             ),
-                            child: Padding(
-                              padding: const EdgeInsets.symmetric(vertical: 14),
+                            child: const Padding(
+                              padding: EdgeInsets.symmetric(vertical: 14),
                               child: Row(
                                 mainAxisAlignment: MainAxisAlignment.center,
-                                children: const [
+                                children: [
                                   Text(
                                     'Sign Up',
                                     style: TextStyle(

@@ -42,3 +42,17 @@ app.*.map.json
 /android/app/debug
 /android/app/profile
 /android/app/release
+
+# Android build output (was previously committed)
+/android/build/
+
+# Firebase CLI / emulators
+.firebase/
+*-debug.log
+
+# Admin tooling: dependencies and service-account keys must never be committed
+tool/admin/node_modules/
+tool/admin/service-account*.json
+tool/rules-test/node_modules/
+tool/admin/backups/
+tool/screenshots/node_modules/

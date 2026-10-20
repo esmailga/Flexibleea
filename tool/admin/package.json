@@ -1,0 +1,12 @@
+{
+  "name": "flexibleea-admin-tools",
+  "private": true,
+  "type": "module",
+  "description": "Grant or revoke the Flexibleea admin custom claim.",
+  "scripts": {
+    "admin": "node set-admin.mjs"
+  },
+  "dependencies": {
+    "firebase-admin": "^13.0.0"
+  }
+}

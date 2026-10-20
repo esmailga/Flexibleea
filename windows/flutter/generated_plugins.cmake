@@ -8,10 +8,6 @@ list(APPEND FLUTTER_PLUGIN_LIST
   firebase_auth
   firebase_core
   firebase_storage
-<<<<<<< HEAD
-=======
-  smart_auth
->>>>>>> ee0abd0ce009c9e89e86e8eca6d34a46631148d7
   url_launcher_windows
 )
 

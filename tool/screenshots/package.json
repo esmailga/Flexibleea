@@ -1,0 +1,9 @@
+{
+  "name": "flexibleea-screenshots",
+  "private": true,
+  "type": "module",
+  "description": "Captures README screenshots of the demo web build using the local Chrome.",
+  "devDependencies": {
+    "puppeteer-core": "^24.0.0"
+  }
+}

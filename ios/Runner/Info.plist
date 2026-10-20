@@ -27,20 +27,18 @@
 	<key>LSApplicationQueriesSchemes</key>
 	<array>
 		<string>mailto</string>
+		<string>tel</string>
+		<string>https</string>
+		<string>whatsapp</string>
 	</array>
 	<key>LSRequiresIPhoneOS</key>
 	<true/>
 	<key>NSCameraUsageDescription</key>
-	<string>Needs camera access</string>
+	<string>Flexibleea uses the camera so you can take a profile photo.</string>
 	<key>NSPhotoLibraryUsageDescription</key>
-	<string>Needs PhotoLib access</string>
+	<string>Flexibleea uses your photo library so you can choose a profile photo.</string>
 	<key>UIApplicationSupportsIndirectInputEvents</key>
 	<true/>
-	<key>UIBackgroundModes</key>
-	<array>
-		<string>fetch</string>
-		<string>remote-notification</string>
-	</array>
 	<key>UILaunchStoryboardName</key>
 	<string>LaunchScreen</string>
 	<key>UIMainStoryboardFile</key>

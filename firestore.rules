@@ -1,0 +1,127 @@
+rules_version = '2';
+
+// Flexibleea Firestore security rules.
+//
+// Collections:
+//   Users/{uid}                                   - one profile per Firebase Auth user
+//   Freelancer Expertise/{listingId}              - expertise listings
+//   Freelancer Expertise/{listingId}/reviews/{uid} - one review per reviewer per listing
+//
+// Admins are Firebase Auth users carrying the custom claim `admin: true`
+// (see tool/admin/README.md). Everything not explicitly allowed is denied,
+// including the legacy `admin` collection.
+service cloud.firestore {
+  match /databases/{database}/documents {
+
+    function signedIn() {
+      return request.auth != null;
+    }
+
+    function isSelf(uid) {
+      return signedIn() && request.auth.uid == uid;
+    }
+
+    function isAdmin() {
+      return signedIn() && request.auth.token.admin == true;
+    }
+
+    function isShortString(value, minSize, maxSize) {
+      return value is string && value.size() >= minSize && value.size() <= maxSize;
+    }
+
+    // ---------------------------------------------------------------- Users
+
+    function validUser(data) {
+      return data.id is string
+        && isShortString(data.name, 1, 80)
+        && isShortString(data.email, 0, 254)
+        && isShortString(data.phoneNumber, 0, 30)
+        && isShortString(data.userImage, 0, 2048);
+    }
+
+    match /Users/{uid} {
+      allow read: if signedIn();
+      allow create: if isSelf(uid)
+        && request.resource.data.id == uid
+        && validUser(request.resource.data);
+      allow update: if (isSelf(uid)
+          && request.resource.data.id == uid
+          && validUser(request.resource.data))
+        || isAdmin();
+      allow delete: if isSelf(uid) || isAdmin();
+    }
+
+    // ----------------------------------------------------- Expertise listings
+    //
+    // Rule paths cannot contain the space in "Freelancer Expertise", so the
+    // collection is matched with a wildcard and checked by name.
+
+    function validListing(data) {
+      return data.uploadedBy is string
+        && isShortString(data.category, 1, 100)
+        && isShortString(data.expertise, 1, 100)
+        && isShortString(data.description, 0, 1000)
+        && data.recruitment is bool
+        && data.get('numberRequests', 0) is int;
+    }
+
+    function isRequestIncrement() {
+      return request.resource.data.diff(resource.data).affectedKeys().hasOnly(['numberRequests'])
+        && request.resource.data.numberRequests == resource.data.get('numberRequests', 0) + 1;
+    }
+
+    match /{collection}/{listingId} {
+      function isListings() {
+        return collection == 'Freelancer Expertise';
+      }
+
+      function ownsListing() {
+        return signedIn() && resource.data.uploadedBy == request.auth.uid;
+      }
+
+      allow read: if isListings() && signedIn();
+
+      allow create: if isListings()
+        && signedIn()
+        && request.resource.data.uploadedBy == request.auth.uid
+        && request.resource.data.freelancerId == listingId
+        && request.resource.data.get('numberRequests', 0) == 0
+        && validListing(request.resource.data);
+
+      allow update: if isListings() && (
+        (ownsListing()
+          && request.resource.data.uploadedBy == resource.data.uploadedBy
+          && request.resource.data.get('numberRequests', 0) == resource.data.get('numberRequests', 0)
+          && validListing(request.resource.data))
+        || (signedIn() && !ownsListing() && isRequestIncrement())
+        || isAdmin());
+
+      allow delete: if isListings() && (ownsListing() || isAdmin());
+
+      // Reviews are keyed by the reviewer's uid: one review per person,
+      // and editing a review simply overwrites it.
+      match /reviews/{reviewerId} {
+        function listing() {
+          return get(/databases/$(database)/documents/$(collection)/$(listingId)).data;
+        }
+
+        function validReview(data) {
+          return data.authorId == reviewerId
+            && isShortString(data.authorName, 0, 80)
+            && isShortString(data.authorImage, 0, 2048)
+            && isShortString(data.body, 7, 500)
+            && data.rating is int && data.rating >= 1 && data.rating <= 5
+            && data.createdAt is timestamp;
+        }
+
+        allow read: if isListings() && signedIn();
+        allow create, update: if isListings()
+          && isSelf(reviewerId)
+          && listing().uploadedBy != request.auth.uid
+          && validReview(request.resource.data);
+        allow delete: if isListings()
+          && (isSelf(reviewerId) || isAdmin() || listing().uploadedBy == request.auth.uid);
+      }
+    }
+  }
+}
